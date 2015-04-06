@@ -1,6 +1,8 @@
 #!/bin/sh
 
-echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io"
+export LANG=C; export LC_ALL=C
+
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
 
 install_pkg() {
 
