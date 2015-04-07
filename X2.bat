@@ -17,6 +17,9 @@ REM call C:\bin\X.bat %HOST% %DEST_DIR%               scripts/do-sbuild-tests.sh
 
 call C:\bin\X.bat %HOST% %DEST_DIR%               scripts/sbuild.conf
 
+
+call C:\bin\X.bat %HOST% %DEST_DIR%               do-chroot.sh
+
 exit /B
 
 call C:\bin\X.bat %HOST% %DEST_DIR%               ../bin/Linux64_kbsmk8.6-cli

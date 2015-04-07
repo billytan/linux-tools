@@ -1,6 +1,12 @@
 #!/bin/bash
 
 #
+# DO NOT USE THIS SCRIPT ....
+#
+#   Use "sbuild-update --keygen" instead;
+#
+
+#
 # "Not enough random bytes available"
 #
 # while true ; do cat /proc/sys/kernel/random/entropy_avail ; sudo find / > /tmp/find.log ; sync ; done

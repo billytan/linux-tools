@@ -84,14 +84,20 @@ oo::class create DebianAutoBuilder {
 		
 		file copy -force $base_dir/sbuild.conf $config_file
 	
-		@ subst $config_file [list %ARCH% $build_arch %SUITE% $suite %CHROOT% $chroot_dir %BUILD_DIR% $build_dir  \
-				%PUB_KEY% $base_dir/builder_key_pub.gpg %SEC_KEY% $base_dir/builder_key_sec.gpg %LOG_DIR% $topdir/logs ]
+		set subst_list			[list %ARCH% $build_arch %SUITE% $suite %CHROOT% $chroot_name %BUILD_DIR% $build_dir %LOG_DIR% $topdir/logs ]
+		
+		#
+		# why we need this ... 
+		#
+		lappend subst_list %PUB_KEY% $base_dir/builder_key_pub.gpg %SEC_KEY% $base_dir/builder_key_sec.gpg
+		
+		@ subst $config_file $subst_list
 
 		#
 		#  E: Local archive GPG signing key not found
 		#
-		file copy -force $base_dir/builder_key_pub.gpg /var/lib/sbuild/apt-keys/sbuild-key.pub
-		file copy -force $base_dir/builder_key_sec.gpg /var/lib/sbuild/apt-keys/sbuild-key.sec
+		# file copy -force $base_dir/builder_key_pub.gpg /var/lib/sbuild/apt-keys/sbuild-key.pub
+		# file copy -force $base_dir/builder_key_sec.gpg /var/lib/sbuild/apt-keys/sbuild-key.sec
 		
 		#
 		# schroot
@@ -131,7 +137,12 @@ profile=buildd
 		}
 	
 		@file "deb $mirror_url $suite main" >> $chroot_dir/etc/apt/sources.list
-	
+		
+		#
+		# as required by "apt-get build-dep"
+		#
+		@file "deb-src $mirror_url $suite main" > $chroot_dir/etc/apt/sources.list
+
 		my chroot $base_dir/init-chroot.sh
 
 	}
